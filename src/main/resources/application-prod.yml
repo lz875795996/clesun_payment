@@ -1,0 +1,166 @@
+server:
+  port: 8110
+druid:
+  allow:
+    ip: 127.0.0.1
+  #登陆的账户密码
+  login:
+    user_name: root
+    password: root
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 10MB # maxFileSize 单个数据大小
+      maxRequestSize: 100MB # maxRequestSize 是总数据大小
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
+      datasource:
+        master:
+          url: jdbc:mysql://39.105.15.128:3376/clesun_payment?useUnicode=false&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+          username: clesun
+          password: Fac#1206!
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave1:
+          url: jdbc:mysql://?useUnicode=false&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+          username:
+          password:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      druid: #以下是全局默认值，可以全局更改
+        initial-size:
+        max-active:
+        min-idle:
+        max-wait:
+        time-between-eviction-runs-millis:
+        time-between-log-stats-millis:
+        stat-sqlmax-size:
+        min-evictable-idle-time-millis:
+        max-evictable-idle-time-millis:
+        test-while-idle:
+        test-on-borrow:
+        test-on-return:
+        validation-query:
+        validation-query-timeout:
+        use-global-datasource-stat:
+        async-init:
+        clear-filters-enable:
+        reset-stat-enable:
+        not-full-timeout-retry-count:
+        max-wait-thread-count:
+        fail-fast:
+        phyTimeout-millis:
+        keep-alive:
+        pool-prepared-statements:
+        init-variants:
+        init-global-variants:
+        use-unfair-lock:
+        kill-when-socket-read-timeout:
+        connection-properties:
+        max-pool-prepared-statement-per-connection-size:
+        init-connection-sqls:
+        share-prepared-statements:
+        connection-errorretry-attempts:
+        break-after-acquire-failure:
+        filters: stat,wall # 注意这个值和druid原生不一致，默认启动了stat,wall
+        wall:
+          noneBaseStatementAllow:
+          callAllow:
+          selectAllow:
+          selectIntoAllow:
+          selectIntoOutfileAllow:
+          selectWhereAlwayTrueCheck:
+          selectHavingAlwayTrueCheck:
+          selectUnionCheck:
+          selectMinusCheck:
+          selectExceptCheck:
+          selectIntersectCheck:
+          createTableAllow:
+          dropTableAllow:
+          alterTableAllow:
+          renameTableAllow:
+          hintAllow:
+          lockTableAllow:
+          startTransactionAllow:
+          blockAllow:
+          conditionAndAlwayTrueAllow:
+          conditionAndAlwayFalseAllow:
+          conditionDoubleConstAllow:
+          conditionLikeTrueAllow:
+          selectAllColumnAllow:
+          deleteAllow:
+          deleteWhereAlwayTrueCheck:
+          deleteWhereNoneCheck:
+          updateAllow:
+          updateWhereAlayTrueCheck:
+          updateWhereNoneCheck:
+          insertAllow:
+          mergeAllow:
+          minusAllow:
+          intersectAllow:
+          replaceAllow:
+          setAllow:
+          commitAllow:
+          rollbackAllow:
+          useAllow:
+          multiStatementAllow:
+          truncateAllow:
+          commentAllow:
+          strictSyntaxCheck:
+          constArithmeticAllow:
+          limitZeroAllow:
+          describeAllow:
+          showAllow:
+          schemaCheck:
+          tableCheck:
+          functionCheck:
+          objectCheck:
+          variantCheck:
+          mustParameterized:
+          doPrivilegedAllow:
+          dir:
+          tenantTablePattern:
+          tenantColumn:
+          wrapAllow:
+          metadataAllow:
+          conditionOpXorAllow:
+          conditionOpBitwseAllow:
+          caseConditionConstAllow:
+          completeInsertValuesCheck:
+          insertValuesCheckSize:
+          selectLimit:
+        stat:
+          merge-sql:
+          log-slow-sql:
+          slow-sql-millis:
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+
+#mybatis-plus配置控制台打印完整带参数SQL语句
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+
+
+security:
+  #权限系统根路径
+  base: https://tea.younongxin.com/security/
+  #权限系统校验token是否失效路径
+  token: /clesun/controller/v1.0/isExpired
+
+clesun:
+  payment:
+    domain: https://tea.younongxin.com/payment/ # 本项目回调域名
